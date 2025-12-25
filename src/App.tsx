@@ -1,0 +1,343 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import "./index.css";
+import { PRODUCTS } from "./products"
+import logo from "./assets/images/shivra_logo-preview.png"
+
+function Navbar() {
+  return (
+    <header className="nav">
+      <div className="nav-left">
+        <a href="#home" className="nav-brand">
+          <img
+            src={logo}
+            alt="Shivra Attars"
+            className="logo-image"
+          />
+          <span className="logo-text">Shivra Attars</span>
+        </a>
+      </div>
+      <nav className="nav-right">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#gifting">Gifting</a>
+        <a href="#about">About Us</a>
+        <a href="#contact" className="nav-cta">
+          Contact Us
+        </a>
+      </nav>
+    </header>
+  );
+}
+
+function HomeSection() {
+  return (
+    <section id="home" className="section hero">
+      <div className="hero-content">
+        <p className="eyebrow">From Kannauj, India’s Attar City</p>
+        <h1>
+          Crafting pure organic attars through traditional distillation and
+          ethically sourced botanicals — keeping nature&apos;s essence alive in
+          every drop.
+        </h1>
+        <p className="hero-sub">
+          Handcrafted, chemical-free and rooted in centuries-old distillation
+          from the perfume capital of India.
+        </p>
+        <div className="hero-actions">
+          <a href="#products" className="btn primary">
+            Shop Attars
+          </a>
+          <a href="#gifting" className="btn ghost">
+            Explore Gift Boxes
+          </a>
+        </div>
+        <div className="hero-meta">
+          <span>100% natural oils</span>
+          <span>Alcohol-free attars</span>
+          <span>Made in Kannauj</span>
+        </div>
+      </div>
+      <div className="hero-visual">
+        {/* Use one of your AI images here */}
+        <div className="hero-bottle" />
+      </div>
+    </section>
+  );
+}
+
+function ProductCard({ product }: {
+  product: any
+}) {
+  return (
+    <div className="product-card">
+      <div className="product-image-wrap">
+        <img src={product.image} alt={product.name} />
+      </div>
+      <div className="product-body">
+        <h3>{product.name}</h3>
+        <p className="product-tagline">{product.tag}</p>
+        <p className="product-meta">
+          Quantity: {product.qty} • <span className="price">{/*({product.price}*/}---₹</span>
+        </p>
+        <button className="btn full">
+          <a href="#contact" className="btn full">
+            Enquire
+          </a>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ProductsSection() {
+  return (
+    <section id="products" className="section">
+      <div className="section-header">
+        <h2>Modern Indian Attars</h2>
+        <p>
+          Pure, natural attars and fragrance blends, crafted through traditional
+          hydro-distillation and inspired by Indian botanicals.
+        </p>
+      </div>
+      <div className="product-grid">
+        {PRODUCTS.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function GiftingSection() {
+  return (
+    <section id="gifting" className="section gifting">
+      <div className="gifting-inner">
+        <div className="gifting-copy">
+          <h2>Gifting, Curated With Fragrance</h2>
+          <p>
+            Thoughtfully designed gift boxes that celebrate rituals, memories
+            and the timeless art of Indian perfumery — perfect for weddings,
+            festivities and intimate celebrations.
+          </p>
+          <ul className="gifting-list">
+            <li>Customisable attar trios and discovery sets</li>
+            <li>Handwritten note and eco-conscious packaging</li>
+            <li>Bulk & corporate gifting options on request</li>
+          </ul>
+          <a href="#contact" className="btn primary">
+            Enquire for Gifting
+          </a>
+        </div>
+        <div className="gifting-visual">
+          {/* Replace with gifting images when you share them */}
+          <div className="gifting-placeholder">Gifting visuals coming soon</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AboutSection() {
+  return (
+    <section id="about" className="section about">
+      <div className="about-layout">
+        <div className="about-copy">
+          <h2>Rooted in Kannauj&apos;s Fragrance Heritage</h2>
+          <p>
+            Rooted in the timeless fragrance heritage of Kannauj, Uttar
+            Pradesh — the world-renowned Attar City of India — our brand is
+            dedicated to preserving and elevating the art of natural perfumery.
+            We humbly carry this legacy forward with every bottle we craft.
+          </p>
+          <p>
+            We specialize in pure, natural attars and fragrances, including
+            incense sticks, rose water, sandalwood blends and other aromatic
+            creations inspired by nature. Our foundation is built on science,
+            tradition and authenticity.
+          </p>
+          <p>
+            Led by a founder with 15+ years of research and development
+            experience in the oil segment and an M.Sc. in Biotechnology, each
+            formulation blends scientific precision with traditional wisdom,
+            ensuring products that are aromatic, pure, safe and thoughtfully
+            developed.
+          </p>
+          <p>
+            We source the finest natural ingredients and follow time-honoured
+            distillation techniques passed down through generations of Kannauj
+            artisans. Our fragrances are chemical-free, long-lasting and deeply
+            connected to nature — crafted to soothe the mind and uplift the
+            soul.
+          </p>
+          <p>
+            For us, fragrance is more than a scent; it is a memory, an emotion
+            and a reflection of purity. Through our creations, we invite you to
+            experience the authentic essence of Kannauj, crafted with care,
+            integrity and passion.
+          </p>
+        </div>
+        <div className="about-side">
+          <div className="about-badge">Handcrafted in Kannauj</div>
+          <ul className="about-points">
+            <li>Small-batch production</li>
+            <li>Ethically sourced botanicals</li>
+            <li>Alcohol and phthalate free</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  const WHATSAPP_NUMBER = "918800692657"; // Your number without +91
+
+  const handleQuickEnquiry = (e: any) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    const text = encodeURIComponent(
+      `Quick Enquiry from Shivra Attars Website\n\n` +
+      `Name: ${name}\n` +
+      `Email: ${email}\n\n` +
+      `Message:\n${message}`
+    );
+
+    // Open WhatsApp Web/Mobile with pre-filled message
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+    
+    // Optional: reset form after opening WhatsApp
+    form.reset();
+  };
+
+  return (
+    <section id="contact" className="section contact">
+      <div className="section-header">
+        <h2>Contact Us</h2>
+        <p>
+          For orders, bulk gifting or custom fragrance enquiries, reach out on
+          email, WhatsApp or social.
+        </p>
+      </div>
+
+      <div className="contact-grid">
+        <div className="contact-block">
+          <h3>Say Hello</h3>
+          <p>
+            Email:{" "}
+            <a href="mailto:kalpataru.monikapatel@gmail.com">
+              kalpataru.monikapatel@gmail.com
+            </a>
+          </p>
+          <p>
+            WhatsApp:{" "}
+            <a href="https://wa.me/918800692657" target="_blank" rel="noreferrer">
+              +91 8800 692 657
+            </a>
+          </p>
+        </div>
+
+        <div className="contact-block">
+          <h3>Social</h3>
+          <p>
+            Instagram:{" "}
+            <a
+              href="https://www.instagram.com/kalptaruofficial/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @kalptaruofficial
+            </a>
+          </p>
+          <p>
+            LinkedIn:{" "}
+            <a
+              href="https://www.linkedin.com/notifications/?filter=all"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View profile
+            </a>
+          </p>
+        </div>
+
+        <div className="contact-block">
+          <h3>Addresses</h3>
+          <p>
+            Manufacturing: Bagiya Fazal Imam, Kannauj, Uttar Pradesh, India
+          </p>
+          <p>Registered Office: Noida, Uttar Pradesh, India</p>
+        </div>
+
+        <div className="contact-block">
+          <h3>Quick Enquiry</h3>
+          <form className="contact-form" onSubmit={handleQuickEnquiry}>
+            <input name="name" type="text" placeholder="Your Name" required />
+            <input name="email" type="email" placeholder="Your Email" required />
+            <textarea 
+              name="message" 
+              rows={3}
+              placeholder="Tell us about your enquiry..." 
+              required 
+            />
+            <button type="submit" className="btn full">
+              Send to WhatsApp →
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+// Meta Pixel placeholder (just include in your real index.html head)
+/*
+  In index.html:
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src='https://connect.facebook.net/en_US/fbevents.js';
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script');
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+*/
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <p>© {new Date().getFullYear()} Shivra Attars. All rights reserved.</p>
+    </footer>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="app">
+      <Navbar />
+      <main>
+        <HomeSection />
+        <ProductsSection />
+        <GiftingSection />
+        <AboutSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+
+
+
+
