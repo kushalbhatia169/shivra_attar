@@ -11,7 +11,7 @@ export const GIFTING_PRODUCTS = [
     description:
       "A curated selection of classic Indian attars in a polished wooden box, perfect for weddings and milestone celebrations.",
     image: giftHeritageSet,
-    note: "Includes 6 mini attars • Customisable combinations",
+    note: "Includes collections of mini attars • Customisable combinations",
   },
   {
     id: 2,
