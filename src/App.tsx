@@ -84,9 +84,14 @@ export function HomeSection() {
   );
 }
 
-function ProductCard({ product }: {
-  product: any
-}) {
+function ProductCard({ product }: { product: any }) {
+  const [showHint, setShowHint] = useState(false);
+
+  const handlePriceClick = () => {
+    setShowHint(true);
+    setTimeout(() => setShowHint(false), 1800); // hide after 1.8s
+  };
+
   return (
     <div className="product-card">
       <div className="product-image-wrap">
@@ -95,14 +100,27 @@ function ProductCard({ product }: {
       <div className="product-body">
         <h3>{product.name}</h3>
         <p className="product-tagline">{product.tag}</p>
+
         <p className="product-meta">
-          Quantity: {product.qty} • <span className="price">{/*({product.price}*/}---₹</span>
+          Quantity: {product.qty} •{" "}
+          <button
+            type="button"
+            className="price price-clickable"
+            onClick={handlePriceClick}
+          >
+            ---₹
+          </button>
         </p>
-        <button className="btn full">
-          <a href="#contact" className="btn full">
-            Enquire
-          </a>
-        </button>
+
+        {showHint && (
+          <p className="price-hint price-hint-pop">
+            Click ⬇️ below to enquire price 
+          </p>
+        )}
+
+        <a href="#contact" className="btn full">
+          Enquire
+        </a>
       </div>
     </div>
   );
