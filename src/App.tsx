@@ -100,7 +100,7 @@ function ProductCard({ product }: { product: any }) {
   };
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={handlePriceClick} onMouseEnter={handlePriceClick}>
       <div className="product-image-wrap">
         <img src={product.image} alt={product.name} />
       </div>
@@ -113,7 +113,6 @@ function ProductCard({ product }: { product: any }) {
           <button
             type="button"
             className="price price-clickable"
-            onClick={handlePriceClick}
           >
             ---₹
           </button>
