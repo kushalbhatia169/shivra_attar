@@ -5,7 +5,7 @@ import heroStill4 from "./assets/hero/5.jpg";
 import heroStill5 from "./assets/hero/6.jpg";
 import heroStillBhapka from "./assets/hero/bhapka.jpg";
 
-export const HERO_BACKGROUNDS = [
+export const HERO_IMAGES = [
   heroStill1,
   heroStill2,
   heroStill3,

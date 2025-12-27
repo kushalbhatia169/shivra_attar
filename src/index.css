@@ -787,4 +787,56 @@ body {
   }
 }
 
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 64px;
+  padding-top: 88px;
+  align-items: center;
+}
 
+.hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+/* increased size */
+.hero-bottle-image {
+  width: 420px;
+  height: 520px;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 28px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(249, 241, 222, 0.2);
+}
+
+/* base transition */
+.hero-slideshow {
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* when image is changing */
+.hero-slideshow-anim {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+/* re-appear state automatically handled by transition when class removed */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 72px;
+  }
+
+  .hero-visual {
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .hero-bottle-image {
+    width: 320px;
+    height: 400px;
+  }
+}

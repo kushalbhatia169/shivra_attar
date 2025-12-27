@@ -2,7 +2,7 @@
 import "./index.css";
 import { CATEGORY_OPTIONS, GENDER_OPTIONS, PRODUCTS } from "./products"
 import logo from "./assets/images/shivra_logo-preview.png"
-import { HERO_BACKGROUNDS } from "./hero";
+import { HERO_IMAGES } from "./hero";
 import { GIFTING_PRODUCTS } from "./gift_section";
 import { useEffect, useMemo, useState } from "react";
 
@@ -33,52 +33,59 @@ function Navbar() {
 }
 
 export function HomeSection() {
-  const [bgIndex, setBgIndex] = useState(0);
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [isChanging, setIsChanging] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(
-      () => setBgIndex((prev) => (prev + 1) % HERO_BACKGROUNDS.length),
-      6000
-    );
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setIsChanging(true);
+      setTimeout(() => {
+        setHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+        setIsChanging(false);
+      }, 350); // match half of CSS animation duration
+    }, 6000);
+    return () => clearInterval(timer);
   }, []);
 
-  const currentBg = HERO_BACKGROUNDS[bgIndex];
+  const currentHero = HERO_IMAGES[heroIndex];
 
   return (
-    <section
-      id="home"
-      className="section hero hero-with-bg hero-single"
-      style={{ backgroundImage: `url(${currentBg})` }}
-    >
-      <div className="hero-overlay" />
-
-      <div className="hero-inner">
-        <div className="hero-content">
-          <p className="eyebrow">From Kannauj, India’s Attar City</p>
-          <h1>
-            Crafting pure organic attars through traditional distillation and
-            ethically sourced botanicals — keeping nature&apos;s essence alive
-            in every drop.
-          </h1>
-          <p className="hero-sub">
-            Handcrafted, chemical-free and rooted in centuries-old distillation
-            from the perfume capital of India.
-          </p>
-          <div className="hero-actions">
-            <a href="#products" className="btn primary">
-              Shop Attars
-            </a>
-            <a href="#gifting" className="btn ghost">
-              Explore Gift Boxes
-            </a>
-          </div>
-          <div className="hero-meta">
-            <span>100% natural oils</span>
-            <span>Alcohol-free attars</span>
-            <span>Made in Kannauj</span>
-          </div>
+    <section id="home" className="section hero">
+      <div className="hero-content">
+        <p className="eyebrow">From Kannauj, India’s Attar City</p>
+        <h1>
+          Crafting pure organic attars through traditional distillation and
+          ethically sourced botanicals — keeping nature&apos;s essence alive in
+          every drop.
+        </h1>
+        <p className="hero-sub">
+          Handcrafted, chemical-free and rooted in centuries-old distillation
+          from the perfume capital of India.
+        </p>
+        <div className="hero-actions">
+          <a href="#products" className="btn primary">
+            Shop Attars
+          </a>
+          <a href="#gifting" className="btn ghost">
+            Explore Gift Boxes
+          </a>
         </div>
+        <div className="hero-meta">
+          <span>100% natural oils</span>
+          <span>Alcohol-free attars</span>
+          <span>Made in Kannauj</span>
+        </div>
+      </div>
+
+      <div className="hero-visual">
+        <img
+          src={currentHero}
+          alt="Traditional attar making at Shivra"
+          className={
+            "hero-bottle-image hero-slideshow" +
+            (isChanging ? " hero-slideshow-anim" : "")
+          }
+        />
       </div>
     </section>
   );
