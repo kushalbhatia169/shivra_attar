@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./index.css";
-import { PRODUCTS } from "./products"
+import { CATEGORY_OPTIONS, GENDER_OPTIONS, PRODUCTS } from "./products"
 import logo from "./assets/images/shivra_logo-preview.png"
+import { HERO_BACKGROUNDS } from "./hero";
+import { GIFTING_PRODUCTS } from "./gift_section";
+import { useEffect, useMemo, useState } from "react";
 
 function Navbar() {
   return (
@@ -29,37 +32,53 @@ function Navbar() {
   );
 }
 
-function HomeSection() {
+export function HomeSection() {
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => setBgIndex((prev) => (prev + 1) % HERO_BACKGROUNDS.length),
+      6000
+    );
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentBg = HERO_BACKGROUNDS[bgIndex];
+
   return (
-    <section id="home" className="section hero">
-      <div className="hero-content">
-        <p className="eyebrow">From Kannauj, India’s Attar City</p>
-        <h1>
-          Crafting pure organic attars through traditional distillation and
-          ethically sourced botanicals — keeping nature&apos;s essence alive in
-          every drop.
-        </h1>
-        <p className="hero-sub">
-          Handcrafted, chemical-free and rooted in centuries-old distillation
-          from the perfume capital of India.
-        </p>
-        <div className="hero-actions">
-          <a href="#products" className="btn primary">
-            Shop Attars
-          </a>
-          <a href="#gifting" className="btn ghost">
-            Explore Gift Boxes
-          </a>
+    <section
+      id="home"
+      className="section hero hero-with-bg hero-single"
+      style={{ backgroundImage: `url(${currentBg})` }}
+    >
+      <div className="hero-overlay" />
+
+      <div className="hero-inner">
+        <div className="hero-content">
+          <p className="eyebrow">From Kannauj, India’s Attar City</p>
+          <h1>
+            Crafting pure organic attars through traditional distillation and
+            ethically sourced botanicals — keeping nature&apos;s essence alive
+            in every drop.
+          </h1>
+          <p className="hero-sub">
+            Handcrafted, chemical-free and rooted in centuries-old distillation
+            from the perfume capital of India.
+          </p>
+          <div className="hero-actions">
+            <a href="#products" className="btn primary">
+              Shop Attars
+            </a>
+            <a href="#gifting" className="btn ghost">
+              Explore Gift Boxes
+            </a>
+          </div>
+          <div className="hero-meta">
+            <span>100% natural oils</span>
+            <span>Alcohol-free attars</span>
+            <span>Made in Kannauj</span>
+          </div>
         </div>
-        <div className="hero-meta">
-          <span>100% natural oils</span>
-          <span>Alcohol-free attars</span>
-          <span>Made in Kannauj</span>
-        </div>
-      </div>
-      <div className="hero-visual">
-        {/* Use one of your AI images here */}
-        <div className="hero-bottle" />
       </div>
     </section>
   );
@@ -90,25 +109,96 @@ function ProductCard({ product }: {
 }
 
 function ProductsSection() {
+  const [category, setCategory] = useState("All");
+  const [gender, setGender] = useState("All");
+
+  const filteredProducts = useMemo(() => {
+    return PRODUCTS.filter((p) => {
+      const matchCategory =
+        category === "All" ? true : p.category === category;
+      const matchGender = gender === "All" ? true : p.gender === gender;
+      return matchCategory && matchGender;
+    });
+  }, [category, gender]);
+
   return (
     <section id="products" className="section">
       <div className="section-header">
-        <h2>Modern Indian Attars</h2>
+        <h2>Attars, Dhoop & Aromatic Essentials</h2>
         <p>
-          Pure, natural attars and fragrance blends, crafted through traditional
-          hydro-distillation and inspired by Indian botanicals.
+          Pure attars, slow-burning dhoop and ritual essentials crafted in
+          Kannauj, curated for everyday wear and gifting.
         </p>
       </div>
+
+      {/* Filters */}
+      <div className="product-filters">
+        <div className="filter-group">
+          <span className="filter-label">Category</span>
+          <div className="filter-pills">
+            {CATEGORY_OPTIONS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={
+                  "filter-pill" + (category === c ? " active" : "")
+                }
+                onClick={() => setCategory(c)}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="filter-group">
+          <span className="filter-label">For</span>
+          <div className="filter-pills">
+            {GENDER_OPTIONS.map((g) => (
+              <button
+                key={g}
+                type="button"
+                className={"filter-pill" + (gender === g ? " active" : "")}
+                onClick={() => setGender(g)}
+              >
+                {g}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Product grid */}
       <div className="product-grid">
-        {PRODUCTS.map((p) => (
+        {filteredProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
+        {filteredProducts.length === 0 && (
+          <p className="no-results">
+            No products match this combination yet. Try a different filter.
+          </p>
+        )}
       </div>
     </section>
   );
 }
 
+
 function GiftingSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % GIFTING_PRODUCTS.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? GIFTING_PRODUCTS.length - 1 : prev - 1
+    );
+  };
+
+  const currentGift = GIFTING_PRODUCTS[currentIndex];
+
   return (
     <section id="gifting" className="section gifting">
       <div className="gifting-inner">
@@ -128,9 +218,58 @@ function GiftingSection() {
             Enquire for Gifting
           </a>
         </div>
+
         <div className="gifting-visual">
-          {/* Replace with gifting images when you share them */}
-          <div className="gifting-placeholder">Gifting visuals coming soon</div>
+          <div className="gifting-carousel">
+            <button
+              type="button"
+              className="gift-arrow gift-arrow-left"
+              onClick={handlePrev}
+              aria-label="Previous gift option"
+            >
+              ‹
+            </button>
+
+            <div className="gifting-card">
+              <div className="gifting-image-wrap">
+                <img src={currentGift.image} alt={currentGift.title} />
+              </div>
+              <div className="gifting-body">
+                <h3>{currentGift.title}</h3>
+                <p className="gifting-description">{currentGift.description}</p>
+                <p className="gifting-note">{currentGift.note}</p>
+                <button className="btn full">
+                  <a href="#contact" className="btn primary">
+                    Enquire on WhatsApp
+                  </a>
+              </button>
+              </div>
+
+              {/* dots INSIDE the card, at bottom */}
+              <div className="gift-dots">
+                {GIFTING_PRODUCTS.map((gift, index) => (
+                  <button
+                    key={gift.id}
+                    type="button"
+                    className={
+                      "gift-dot" + (index === currentIndex ? " active" : "")
+                    }
+                    onClick={() => setCurrentIndex(index)}
+                    aria-label={`View ${gift.title}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="gift-arrow gift-arrow-right"
+              onClick={handleNext}
+              aria-label="Next gift option"
+            >
+              ›
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -245,7 +384,7 @@ function ContactSection() {
           <p>
             Instagram:{" "}
             <a
-              href="https://www.instagram.com/kalptaruofficial/"
+              href="https://www.instagram.com/reel/DRmgIaTibUG/?igsh=dHVqdWI4ZWVrZnox"
               target="_blank"
               rel="noreferrer"
             >
@@ -253,13 +392,13 @@ function ContactSection() {
             </a>
           </p>
           <p>
-            LinkedIn:{" "}
+            Youtube:{" "}
             <a
-              href="https://www.linkedin.com/notifications/?filter=all"
+              href="https://www.youtube.com/"
               target="_blank"
               rel="noreferrer"
             >
-              View profile
+              Visit Our Page
             </a>
           </p>
         </div>
