@@ -324,6 +324,7 @@ export const PRODUCTS = [
   {
     id: 29,
     name: "Rose Water",
+    gender: "Unisex",
     tag: "Delicate steam‑distilled gulab jal for skin and rituals.",
     qty: "100 ml",
     price: "₹ 349",
@@ -333,6 +334,7 @@ export const PRODUCTS = [
   {
     id: 30,
     name: "Sandal Dhoop",
+    gender: "Unisex",
     tag: "Slow‑burning chandan dhoop that fills spaces with temple calm.",
     qty: "Pack",
     price: "₹ 249",
@@ -342,6 +344,7 @@ export const PRODUCTS = [
   {
     id: 31,
     name: "Lavender Dhoop",
+    gender: "Unisex",
     tag: "Soothing lavender smoke for relaxed evenings and sleep rituals.",
     qty: "Pack",
     price: "₹ 249",
